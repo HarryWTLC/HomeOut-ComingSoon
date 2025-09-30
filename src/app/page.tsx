@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import CountdownClock from "@/components/Clock";
 import "material-symbols";
 

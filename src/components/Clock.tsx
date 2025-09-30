@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface CountdownClockProps {
   targetDate: string; // ISO format: '2025-10-01T00:00:00'
 }
 
 const CountdownClock: React.FC<CountdownClockProps> = ({ targetDate }) => {
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = useCallback(() => {
     const difference = +new Date(targetDate) - +new Date();
     if (difference <= 0) return null;
 
@@ -17,7 +17,7 @@ const CountdownClock: React.FC<CountdownClockProps> = ({ targetDate }) => {
       minutes: Math.floor((difference / (1000 * 60)) % 60),
       seconds: Math.floor((difference / 1000) % 60),
     };
-  };
+  }, []);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -29,14 +29,14 @@ const CountdownClock: React.FC<CountdownClockProps> = ({ targetDate }) => {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  if (!timeLeft) return <div className="text-red-500">Time's up!</div>;
+  if (!timeLeft) return <div className="text-red-500">Time&apos;s up!</div>;
 
   return (
     <div className="flex gap-4 text-2xl font-mono text-white">
-      <div>{timeLeft.days}d</div>
-      <div>{timeLeft.hours}h</div>
-      <div>{timeLeft.minutes}m</div>
-      <div>{timeLeft.seconds}s</div>
+      <div>{timeLeft.days}D</div>
+      <div>{timeLeft.hours}H</div>
+      <div>{timeLeft.minutes}M</div>
+      <div>{timeLeft.seconds}S</div>
     </div>
   );
 };
